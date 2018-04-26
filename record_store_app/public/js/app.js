@@ -241,10 +241,11 @@ class RecordsList extends React.Component{
                         {this.props.records.map((record, index) => {
                             return  <tr>
 
+
                                         <td
                                             className='record'
                                             onClick={()=>
-                                                { this.props.getRecord(record); this.props.toggleState('recordsListIsVisible', 'recordyIsVisible')}}>
+                                                { this.props.getRecord(record); this.props.toggleState('recordsListIsVisible', 'recordIsVisible')}}>
 
                                                 <h3> {record.artist} </h3>
                                         </td>
@@ -364,7 +365,7 @@ class Records extends React.Component{
         .catch(error => console.log(error))
     }
     render(){
-        return  <div>
+        return  <div className='records column'>
                     <h2>Records</h2>
 
                     {this.state.recordsListIsVisible ?

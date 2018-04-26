@@ -1,0 +1,32 @@
+* {
+  background-image: url(/img/brickwall.png);
+  font-family: 'Do Hyeon', sans-serif;
+
+}
+
+.container{
+  display: flex;
+  flex-direction: row;
+  margin: 20px auto;
+  border: solid black 2px;
+  border-radius: 5px;
+
+}
+
+.section{
+  /* border: solid pink 2px; */
+  display: flex;
+  text-align: center;
+
+}
+
+.tile{
+  /* border: solid pink 2px; */
+  display: flex;
+  margin: 0 auto;
+  width: 50%;
+}
+
+.field {
+  /* border: solid pink 2px; */
+}
