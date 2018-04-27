@@ -14,7 +14,7 @@ DB = PG.connect(host: "localhost", port: 5432, dbname: 'record_store')
 
 DB.exec(
     <<-SQL
-    CREATE TABLE records (id SERIAL, artist VARCHAR(50), album_title VARCHAR(50), image TEXT, track_listing TEXT, categories TEXT, release_date VARCHAR(10), description TEXT, price REAL, qty INT);
+    CREATE TABLE records (id SERIAL, artist VARCHAR(50), album_title VARCHAR(50), image TEXT, release_date VARCHAR(10), description TEXT, price REAL, qty INT);
     SQL
 )
 
