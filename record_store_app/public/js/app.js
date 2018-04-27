@@ -36,7 +36,9 @@ class RecordForm extends React.Component{
         this.props.handleSubmit(this.state)
     }
     render(){
-        return  <div className='field'>
+        return  <div>
+
+                <div className='field'>
 
                     <form onSubmit={this.handleSubmit}>
 
@@ -102,8 +104,8 @@ class RecordForm extends React.Component{
                         </label>
                         <div className='control'>
                             <input
-                            className='input'
-                            type='text'
+                            className='textarea'
+                            type='textarea'
                             id='description'
                             onChange={this.handleChange}
                             value={this.state.description}
@@ -138,19 +140,24 @@ class RecordForm extends React.Component{
                             />
                         </div>
 
-                        <div className='control'>
-                            <input className='button is-primary' type='submit' />
+                        <div className="button-container">
+                            <div className='control'>
+                                <input className='button is-warning' type='submit' />
+                            </div>
+
+                            <button
+                                className='button is-danger'
+                                onClick={()=>this.props.toggleState('addRecordIsVisible', 'recordsListIsVisible')}>Cancel
+                            </button>
                         </div>
 
                     </form>
 
-                        <button
-                            className='button is-link'
-                            onClick={()=>this.props.toggleState('addRecordIsVisible', 'recordsListIsVisible')}>Cancel
-                        </button>
+
 
 
                 </div>
+            </div>
     }
 }
 
@@ -158,67 +165,46 @@ class RecordForm extends React.Component{
 class Record extends React.Component{
     render(){
         return  <div>
+                        <button
+                             id="see-full" className='button is-warning' onClick={()=>this.props.toggleState('addRecordIsVisible', 'recordsListIsVisible')}>See Full List
+                        </button>
 
-                    <div className='tile is-ancestor'>
-
-                        <div className='tile is-2'>
-                        </div>
-
-                        <div className='tile is-2'>
-                        </div>
-
-                        <div className='tile'>
-
-                            <div>
-
-                                <h3 className='tile is-child box'>
-                                    <span>Artist Name:</span>
+                    <div className="show-record">
+                            <div className="record-img">
+                                <img className="show-image" src={this.props.record.image}/>
+                            </div>
+                            <div className="record-info">
+                                <h3>
+                                    <span>Artist Name: </span>
                                         {this.props.record.artist}
                                 </h3>
 
-                                <p className='tile is-child box'>
-                                    <span>Album Title:</span>
+                                <p>
+                                    <span>Album Title: </span>
                                     {this.props.record.album_title}
                                 </p>
 
-                                <p className='tile is-child box'>
-                                    <span>Image:</span>
-                                    {this.props.record.image}
-                                </p>
-
-                                <p className='tile is-child box'>
-                                    <span>Release Date:</span>
+                                <p>
+                                    <span>Release Date: </span>
                                     {this.props.record.release_date}
                                 </p>
 
-                                <p className='tile is-child box'>
-                                    <span>Description:</span>
+                                <p>
+                                    <span>Description: </span>
                                     {this.props.record.description}
                                 </p>
 
-                                <p className='tile is-child box'>
-                                    <span>Price:</span>
+                                <p>
+                                    <span>Price: </span>
                                     {this.props.record.price}
                                 </p>
 
-                                <p className='tile is-child box'>
-                                    <span>Quantity:</span>
+                                <p>
+                                    <span>Quantity: </span>
                                     {this.props.record.qty}
                                 </p>
 
                             </div>
-
-                            <div className='tile'>
-                            </div>
-
-                            <div className='tile'>
-
-                                <button
-                                    className='button is-warning' onClick={()=>this.props.toggleState('addRecordIsVisible', 'recordsListIsVisible')}>See Full List
-                                </button>
-                            </div>
-
-                        </div>
 
                     </div>
 
@@ -235,41 +221,45 @@ class Record extends React.Component{
 // Rendered by Records Component when recordsListIsVisible
 class RecordsList extends React.Component{
     render(){
-        return  <table>
-                    <tbody>
+        return  <div className="container">
+                    <div className="shelf-container">
 
                         {this.props.records.map((record, index) => {
-                            return  <tr>
+                            return  <div className="record-card">
 
+                                     <div className="record">
 
-                                        <td
-                                            className='record'
-                                            onClick={()=>
-                                                { this.props.getRecord(record); this.props.toggleState('recordsListIsVisible', 'recordIsVisible')}}>
+                                                <h3 className="artist"> {record.artist} </h3>
+                                                <h3 className="album"> {record.album_title}</h3>
+                                                <div className="record-image">
+                                                    <img
+                                                        src={record.image}
+                                                        onClick={()=>
+                                                            { this.props.getRecord(record); this.props.toggleState('recordsListIsVisible', 'recordIsVisible')}}/>
+                                                </div>
+                                                <h3 className="price"> ${record.price} </h3>
+                                        </div>
 
-                                                <h3> {record.artist} </h3>
-                                        </td>
-
-                                        <td>
+                                        <div className="buttons-container">
                                             <button
                                                 className='button is-warning is-small'
                                                 onClick={()=> this.props.handleUpdateSubmit(record, index)}
-                                            >Edit</button>
-                                        </td>
+                                            ><i class="far fa-edit fa-lg"></i></button>
 
-                                        <td>
+
+
                                             <button
                                                 className='button is-danger is-small'
                                                 onClick={() => this.props.deleteRecord(record, index)}
-                                            >Delete</button>
-                                        </td>
+                                            ><i class="far fa-trash-alt fa-lg"></i></button>
+                                        </div>
 
-                                    </tr>
+                                    </div>
                         })}
 
 
-                    </tbody>
-                </table>
+                    </div>
+                </div>
     }
 }
 
@@ -366,16 +356,17 @@ class Records extends React.Component{
     }
     render(){
         return  <div className='records column'>
-                    <h2>Records</h2>
 
                     {this.state.recordsListIsVisible ?
                         <button
+                            id="add-button"
                             className='button is-success'
                             onClick={()=>this.toggleState('addRecordIsVisible', 'recordsListIsVisible')}>
-                            Add a Record
+                            <i class="fas fa-plus-circle"></i> Add a Record
                         </button> : ''
                     }
 
+                    <h2 className="section-title">Records</h2>
                     {this.state.recordsListIsVisible ?
                         <RecordsList
                             toggleState={this.toggleState}
@@ -412,8 +403,21 @@ class Records extends React.Component{
 class App extends React.Component{
     render(){
         return  <div className='section'>
-                    <h1 className='title'>React Records!</h1>
+                    <div className="hero-image">
+                        <div className="hero-text">
+                            <h1 className="title">React Records!</h1>
+                            <h2 className="sub-title"> {"A Curated Selection of Vinyl Records"}</h2>
+                        </div>
+                    </div>
                     <Records />
+                    <footer>
+
+                            <p>Created by Trenton Marks, Natalie Wolff, and Shaun Savage</p>
+
+
+                            <p>Header Photo by <a href="https://burst.shopify.com/@matthew_henry?utm_campaign=photo_credit&amp;utm_content=Browse+Free+HD+Images+of+Records+Texture&amp;utm_medium=referral&amp;utm_source=credit">Matthew Henry</a> from <a href="https://burst.shopify.com/textures?utm_campaign=photo_credit&amp;utm_content=Browse+Free+HD+Images+of+Records+Texture&amp;utm_medium=referral&amp;utm_source=credit">Burst</a></p>
+
+                    </footer>
                 </div>
     }
 }
