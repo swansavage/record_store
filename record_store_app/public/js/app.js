@@ -29,7 +29,7 @@ class RecordForm extends React.Component{
         }
     }
     handleChange(event){
-        event.preventDefault();
+        // event.preventDefault();
         this.setState({ [event.target.id]: event.target.value})
     }
     handleSubmit(event){
@@ -162,12 +162,175 @@ class RecordForm extends React.Component{
     }
 }
 
+class EditRecordForm extends React.Component{
+    constructor(props){
+        super(props)
+        this.handleChange = this.handleChange.bind(this)
+        this.handleSubmit = this.handleSubmit.bind(this)
+        this.state = {
+            artist: '',
+            album_title: '',
+            image: '',
+            release_date: '',
+            description: '',
+            price: 0,
+            qty: 0
+        }
+    }
+    componentDidMount(){
+        if(this.props.record){
+            this.setState({
+                artist: this.props.record.artist,
+                album_title: this.props.record.album_title,
+                image: this.props.record.image,
+                release_date: this.props.record.release_date,
+                description: this.props.record.description,
+                price: this.props.record.price,
+                qty: this.props.record.qty,
+                id: this.props.record.id
+            })
+        }
+    }
+    handleChange(event){
+        // event.preventDefault();
+        this.setState({ [event.target.id]: event.target.value})
+    }
+    handleSubmit(event){
+        event.preventDefault();
+        this.props.handleSubmit(this.state)
+    }
+    render(){
+        return  <div>
+
+                <div className='field'>
+
+                    <form onSubmit={this.handleSubmit}>
+
+                        <label
+                            className='label'
+                            for='artist'>Artist name
+                        </label>
+                        <div className='control'>
+                            <input
+                            className='input'
+                            type='text'
+                            id='artist'
+                            onChange={this.handleChange}
+                            value={this.state.artist}
+                            />
+                        </div>
+
+                        <label
+                            className='label'
+                            for='album_title'>Album title
+                        </label>
+                        <div className='control'>
+                            <input
+                            className='input'
+                            type='text'
+                            id='album_title'
+                            onChange={this.handleChange}
+                            value={this.state.album_title}
+                            />
+                        </div>
+
+                        <label
+                            className='label'
+                            for='image'>Image
+                        </label>
+                        <div className='control'>
+                            <input
+                            className='input'
+                            type='text'
+                            id='image'
+                            onChange={this.handleChange}
+                            value={this.state.image}
+                            />
+                        </div>
+
+                        <label
+                            className='label'
+                            for='release_date'>Release date
+                        </label>
+                        <div className='control'>
+                            <input
+                            className='input'
+                            type='text'
+                            id='release_date'
+                            onChange={this.handleChange}
+                            value={this.state.release_date}
+                            />
+                        </div>
+
+                        <label
+                            className='label'
+                            for='description'>Description
+                        </label>
+                        <div className='control'>
+                            <input
+                            className='textarea'
+                            type='textarea'
+                            id='description'
+                            onChange={this.handleChange}
+                            value={this.state.description}
+                            />
+                        </div>
+
+                        <label
+                            className='label'
+                            for='price'>Price
+                        </label>
+                        <div className='control'>
+                            <input
+                            className='input'
+                            type='text'
+                            id='price'
+                            onChange={this.handleChange}
+                            value={this.state.price}
+                            />
+                        </div>
+
+                        <label
+                            className='label'
+                            for='qty'>Quantity in Stock
+                        </label>
+                        <div className='control'>
+                            <input
+                            className='input'
+                            type='text'
+                            id='qty'
+                            onChange={this.handleChange}
+                            value={this.state.qty}
+                            />
+                        </div>
+
+                        <div className="button-container">
+                            <div className='control'>
+                                <input className='button is-warning' type='submit' />
+                            </div>
+
+                            <button
+                                className='button is-danger'
+                                onClick={()=>this.props.toggleState('editRecordIsVisible', 'recordsListIsVisible')}>Cancel
+                            </button>
+                        </div>
+
+                    </form>
+
+
+
+
+                </div>
+            </div>
+    }
+}
+
 // Rendered by Records Component when recordIsVisible
 class Record extends React.Component{
     render(){
         return  <div>
                         <button
-                             id="see-full" className='button is-warning' onClick={()=>this.props.toggleState('addRecordIsVisible', 'recordsListIsVisible')}>See Full List
+                             id="see-full" className='button is-warning' onClick={()=>this.props.toggleState('recordIsVisible', 'recordsListIsVisible')}>See Full List
                         </button>
 
                     <div className="show-record">
@@ -209,11 +372,7 @@ class Record extends React.Component{
 
                     </div>
 
-                    <RecordForm
-                        toggleState={this.props.toggleState}
-                        record={this.props.record}
-                        handleSubmit={this.props.handleSubmit}
-                    />
+
 
                 </div>
     }
@@ -244,7 +403,7 @@ class RecordsList extends React.Component{
                                         <div className="buttons-container">
                                             <button
                                                 className='button is-warning is-small'
-                                                onClick={()=> this.props.handleUpdateSubmit(record, index)}
+                                                onClick={()=> this.props.toggleState('recordsListIsVisible', 'editRecordIsVisible')}
                                             ><i class="far fa-edit fa-lg"></i></button>
 
 
@@ -351,7 +510,7 @@ class Records extends React.Component{
         })
         .then(jsonedRecord => {
             this.getRecords()
-            this.toggleState('recordsListIsVisible', 'recordIsVisible')
+            this.toggleState('recordsListIsVisible', 'editRecordIsVisible')
         })
         .catch(error => console.log(error))
     }
@@ -390,7 +549,15 @@ class Records extends React.Component{
                         <Record
                             toggleState={this.toggleState}
                             record={this.state.record}
+                            // handleSubmit={this.handleUpdateSubmit}
+                        /> : ''
+                    }
+
+                    {this.state.editRecordIsVisible ?
+                        <EditRecordForm
+                            toggleState={this.toggleState}
                             handleSubmit={this.handleUpdateSubmit}
+                            state={this.state}
                         /> : ''
                     }
                 </div>
