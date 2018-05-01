@@ -493,6 +493,7 @@ class Records extends React.Component{
         })
         .then(jsonedRecord => {
             this.handleCreate(jsonedRecord)
+            this.getRecords()
             this.toggleState('addRecordIsVisible', 'recordsListIsVisible')
         })
     }
