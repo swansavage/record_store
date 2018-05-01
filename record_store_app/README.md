@@ -1,6 +1,7 @@
 ## UNIT 4 | Ruby on Rails - Group Project
 
 ### REACT RECORDS
+https://react-records-app.herokuapp.com/
 
 #### Created By Shaun Savage, Trenton Marks, & Natalie Wolff
 
@@ -24,6 +25,6 @@ Slack was our main source of communication and we used it daily to communicate o
 
 ## UNSOLVED PROBLEMS
 
-* Cancel button is rendering the Form view twice. We think it has something to do with the toggle state changes but haven't been able to pinpoint the error or find a fix.
+We spent the majority of our time working through some weird errors with the Cancel and Full See List buttons generating curious results. 
 
-* View Full List button will sometimes show the form at the bottom of the page.
+We were finally able to work out all of the bugs and have a fully functional website to present. Next steps that have been researched but are not fully functional include a search function, member login, and a "cart" function that would impact the inventory.
