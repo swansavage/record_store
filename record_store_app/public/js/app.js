@@ -216,7 +216,7 @@ class EditRecordForm extends React.Component{
                             type='text'
                             id='artist'
                             onChange={this.handleChange}
-                            value={this.state.artist}
+                            placeholder={this.props.record.artist}
                             />
                         </div>
 
@@ -230,7 +230,7 @@ class EditRecordForm extends React.Component{
                             type='text'
                             id='album_title'
                             onChange={this.handleChange}
-                            value={this.state.album_title}
+                            placeholder={this.props.record.album_title}
                             />
                         </div>
 
@@ -244,7 +244,7 @@ class EditRecordForm extends React.Component{
                             type='text'
                             id='image'
                             onChange={this.handleChange}
-                            value={this.state.image}
+                            placeholder={this.props.record.image}
                             />
                         </div>
 
@@ -258,7 +258,7 @@ class EditRecordForm extends React.Component{
                             type='text'
                             id='release_date'
                             onChange={this.handleChange}
-                            value={this.state.release_date}
+                            placeholder={this.props.record.release_date}
                             />
                         </div>
 
@@ -272,7 +272,7 @@ class EditRecordForm extends React.Component{
                             type='textarea'
                             id='description'
                             onChange={this.handleChange}
-                            value={this.state.description}
+                            placeholder={this.props.record.description}
                             />
                         </div>
 
@@ -286,7 +286,7 @@ class EditRecordForm extends React.Component{
                             type='text'
                             id='price'
                             onChange={this.handleChange}
-                            value={this.state.price}
+                            placeholder={this.props.record.price}
                             />
                         </div>
 
@@ -300,7 +300,7 @@ class EditRecordForm extends React.Component{
                             type='text'
                             id='qty'
                             onChange={this.handleChange}
-                            value={this.state.qty}
+                            placeholder={this.props.record.qty}
                             />
                         </div>
 
@@ -403,7 +403,8 @@ class RecordsList extends React.Component{
                                         <div className="buttons-container">
                                             <button
                                                 className='button is-warning is-small'
-                                                onClick={()=> this.props.toggleState('recordsListIsVisible', 'editRecordIsVisible')}
+                                                onClick={()=>{ this.props.toggleState('recordsListIsVisible', 'editRecordIsVisible')
+                                                this.props.getRecord(record)}}
                                             ><i class="far fa-edit fa-lg"></i></button>
 
 
@@ -558,7 +559,7 @@ class Records extends React.Component{
                         <EditRecordForm
                             toggleState={this.toggleState}
                             handleSubmit={this.handleUpdateSubmit}
-                            state={this.state}
+                            record={this.state.record}
                         /> : ''
                     }
                 </div>
